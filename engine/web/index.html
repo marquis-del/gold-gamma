@@ -104,6 +104,19 @@
   .bar{height:6px;border-radius:99px;background:var(--panel-2);margin-top:9px;overflow:hidden;display:flex}
   .bar i{display:block;height:100%}
 
+  /* macro */
+  .macro{border-radius:16px;padding:14px 16px 13px;box-shadow:var(--shadow);border:1px solid var(--line);background:var(--panel)}
+  .macro .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .macro .state{font-size:16px;font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+  .macro.tail .state{color:var(--sup)} .macro.head .state{color:var(--amp)} .macro.mix .state{color:var(--ink-soft)}
+  .macro .dot{width:9px;height:9px;border-radius:50%}
+  .macro.tail .dot{background:var(--sup)} .macro.head .dot{background:var(--amp)} .macro.mix .dot{background:var(--ink-soft)}
+  .macro .desc{margin:7px 0 0;font-size:12px;color:var(--ink-soft);line-height:1.5}
+  .fund{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .fund .card .v{font-size:19px}
+  .corrnote{font-size:11px;color:var(--ink-soft);margin:8px 0 0;padding-top:8px;border-top:1px solid var(--line)}
+  .corrnote b{color:var(--ink)}
+
   /* ladder */
   .ladder{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 14px 14px;box-shadow:var(--shadow)}
   .ladder h3{margin:0 0 3px;font-size:14px;font-weight:700}
@@ -212,12 +225,46 @@
     </div>
   </div>
 
+  <!-- MACRO REGIME -->
+  <section class="macro mix" id="macroBanner">
+    <div class="row">
+      <div class="state"><span class="dot"></span><span id="macroState">Mixed</span></div>
+      <span class="eyebrow">Macro backdrop</span>
+    </div>
+    <p class="desc" id="macroDesc">—</p>
+  </section>
+
+  <!-- FUNDAMENTALS -->
+  <div class="fund">
+    <div class="card">
+      <div class="k">DXY</div>
+      <div class="v mono" id="dxyLevel">—</div>
+      <div class="d" id="dxyChg">—</div>
+    </div>
+    <div class="card">
+      <div class="k" id="rateLabel">10Y yield</div>
+      <div class="v mono" id="rateVal">—</div>
+      <div class="d" id="rateChg">—</div>
+    </div>
+    <div class="card">
+      <div class="k">Gold ↔ DXY corr</div>
+      <div class="v mono" id="corrDxy">—</div>
+      <div class="d">30d daily returns</div>
+    </div>
+    <div class="card">
+      <div class="k">Gold ↔ SPX corr</div>
+      <div class="v mono" id="corrSpx">—</div>
+      <div class="d">30d daily returns</div>
+    </div>
+  </div>
+
   <!-- LADDER -->
   <section class="ladder">
     <h3>Gamma by strike</h3>
     <p class="sub">Call gamma (right) vs put gamma (left) · /GC + GLD combined book</p>
     <div id="rungs"></div>
     <div class="axis"><span>◄ Put gamma (support)</span><span>Call gamma (resistance) ►</span></div>
+    <p class="corrnote">GLD-proxy trust check — <b>GC/GLD price correlation: <span id="corrGcGld">—</span></b> (30d daily returns; GLD strikes are converted to /GC-equivalent gold price for this book)</p>
   </section>
 
   <!-- PLAN -->
@@ -254,6 +301,12 @@
     underlying:{ xauusd:2536.40 },
     regime:{ state:"SUPPRESSION", net_gex:1.83e9, net_dex:-0.42e9, flip:2523.3 },
     levels:{ call_wall:2560, put_wall:2500, hvl:2540 },
+    macro:{
+      regime:{state:"MIXED", description:"Sample data — wire levels.json for a live macro read."},
+      dxy:{level:104.2, chg_5d_pct:0.3},
+      rate_label:"10Y yield", rate_val:4.1, rate_chg_5d_bp:2.0,
+      correlations:{gold_vs_dxy:-0.55, gold_vs_spx:0.20, gc_vs_gld:0.98}
+    },
     // strike : {call, put} gamma-notional in $ (sign handled by side)
     ladder:[
       {k:2575, call:0.34, put:0.02},
@@ -287,6 +340,32 @@
       <li><b>Reclaiming ${fmt(flip)}</b> restores suppression — the tape goes back to a contained, mean-reverting one.</li>
       <li>Rallies can run to the call wall <span class="mono">${fmt(callWall)}</span> before dealers cap them.</li>
       <li>${dexLine}</li>`;
+  }
+
+  function confluenceLine(macroState,sup){
+    if(macroState==="TAILWIND") return sup
+      ? "Macro tailwind, but dealer gamma is pinning price in a contained range — expect grinding strength rather than a breakout unless the flip gives way."
+      : "Macro tailwind lines up with a trending (negative-gamma) tape — upside momentum is unusually well-supported right now.";
+    if(macroState==="HEADWIND") return sup
+      ? "Macro headwind, but dealer gamma is containing price — rallies likely stay capped near the call wall even without a fundamental catalyst."
+      : "Macro headwind lines up with a trending tape — downside momentum has room to extend.";
+    return "Dollar and rate signals aren't aligned — today's structure is being driven mostly by dealer positioning, not fundamentals.";
+  }
+
+  function renderMacro(m,sup,flip,callWall,putWall){
+    const st=m.regime.state;
+    const cls = st==="TAILWIND"?"tail":st==="HEADWIND"?"head":"mix";
+    const banner=$("#macroBanner"); banner.className="macro "+cls;
+    $("#macroState").textContent=st.charAt(0)+st.slice(1).toLowerCase();
+    $("#macroDesc").innerHTML=`${m.regime.description} <b>${confluenceLine(st,sup)}</b>`;
+    $("#dxyLevel").textContent=m.dxy.level!=null?fmt(m.dxy.level):"—";
+    $("#dxyChg").textContent=m.dxy.chg_5d_pct!=null?((m.dxy.chg_5d_pct>=0?"+":"")+m.dxy.chg_5d_pct.toFixed(2)+"% 5d"):"—";
+    $("#rateLabel").textContent=m.rate_label||"10Y yield";
+    $("#rateVal").textContent=m.rate_val!=null?m.rate_val.toFixed(2)+"%":"—";
+    $("#rateChg").textContent=m.rate_chg_5d_bp!=null?((m.rate_chg_5d_bp>=0?"+":"")+m.rate_chg_5d_bp.toFixed(1)+"bp 5d"):"—";
+    $("#corrDxy").textContent=m.correlations.gold_vs_dxy!=null?m.correlations.gold_vs_dxy.toFixed(2):"—";
+    $("#corrSpx").textContent=m.correlations.gold_vs_spx!=null?m.correlations.gold_vs_spx.toFixed(2):"—";
+    $("#corrGcGld").textContent=m.correlations.gc_vs_gld!=null?m.correlations.gc_vs_gld.toFixed(2):"—";
   }
 
   function render(){
@@ -325,6 +404,8 @@
     $("#mkHvl").querySelector(".val").textContent=fmt(L.hvl);
     const sm=$("#mkSpot"); sm.style.left=pos(spot)+"%"; sm.querySelector(".flag").textContent=fmt(spot);
     $("#gaugeLo").textContent=fmt(lo); $("#gaugeHi").textContent=fmt(hi);
+    // macro
+    if(d.macro) renderMacro(d.macro, sup, R.flip, L.call_wall, L.put_wall);
     // plan
     $("#planList").innerHTML=planHTML(sup,R.flip,L.call_wall,L.put_wall,L.hvl,R.net_dex);
     // ladder
@@ -363,15 +444,30 @@
   // ---- Live wiring: read the engine's levels.json (SPEC schema) ----
   function normalize(j){
     const flip = (j.regime && j.regime.flip) ? j.regime.flip.xauusd : null;
-    return {
+    const m = j.macro;
+    let macro;
+    if(m){
+      const useReal = m.regime && m.regime.rate_basis==="real_10y" && m.real_yield_10y;
+      macro = {
+        regime: m.regime,
+        dxy: m.dxy,
+        rate_label: useReal ? "Real 10Y yield" : "10Y yield (nominal)",
+        rate_val: useReal ? m.real_yield_10y.pct : m.yield_10y_nominal.pct,
+        rate_chg_5d_bp: useReal ? m.real_yield_10y.chg_5d_bp : m.yield_10y_nominal.chg_5d_bp,
+        correlations: m.correlations,
+      };
+    }
+    const out = {
       asof_utc: j.asof_utc || new Date().toISOString(),
       data_source: j.data_source,
       oi_date: j.oi_date,
       underlying:{ xauusd: j.underlying.xauusd },
       regime:{ state:j.regime.state, net_gex:j.regime.net_gex, net_dex:j.regime.net_dex, flip:flip },
       levels:{ call_wall:j.levels_xauusd.call_wall, put_wall:j.levels_xauusd.put_wall, hvl:j.levels_xauusd.hvl },
-      ladder:(j.ladder||[]).map(r=>({k:r.strike_xau, call:Math.abs(r.call_gex||0), put:Math.abs(r.put_gex||0)}))
+      ladder:(j.ladder||[]).map(r=>({k:r.strike_xau, call:Math.abs(r.call_gex||0), put:Math.abs(r.put_gex||0)})),
     };
+    if(macro) out.macro = macro;
+    return out;
   }
   function applyLive(n){
     Object.assign(data, n);

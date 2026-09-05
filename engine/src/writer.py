@@ -45,6 +45,18 @@ def build_brief(result: dict) -> str:
             f"- Breakdowns extend toward the put wall {_fmt(L['put_wall'])}; reclaiming {_fmt(flip)} restores suppression.",
             f"- Rallies can run to the call wall {_fmt(L['call_wall'])} before dealers cap them.",
         ]
+    M = result.get("macro")
+    if M:
+        rate_label = "real 10Y" if M["regime"]["rate_basis"] == "real_10y" else "nominal 10Y"
+        rate_val = (M.get("real_yield_10y") or {}).get("pct") if M["regime"]["rate_basis"] == "real_10y" else M["yield_10y_nominal"]["pct"]
+        lines += [
+            "",
+            "## Macro backdrop",
+            f"**Regime:** {M['regime']['state']} — {M['regime']['description']}",
+            f"DXY {_fmt(M['dxy']['level'])} ({M['dxy']['chg_5d_pct']:+.2f}% 5d)  |  {rate_label} {rate_val:.2f}%  |  "
+            f"gold/DXY corr {M['correlations']['gold_vs_dxy']}  |  gold/SPX corr {M['correlations']['gold_vs_spx']}",
+            f"_GLD-proxy trust check — GC/GLD {M['window_days']}d return correlation: {M['correlations']['gc_vs_gld']}._",
+        ]
     lines += ["", f"_OI is prior-session settlement (T+1). Sign convention: {result['sign_convention']}. Positioning context, not financial advice._"]
     return "\n".join(lines)
 
