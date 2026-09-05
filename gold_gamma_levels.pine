@@ -1,0 +1,110 @@
+//@version=5
+// =============================================================
+//  GOLD DEALER GAMMA LEVELS  —  for XAUUSD
+//  Plots Call Wall / Put Wall / Gamma Flip / HVL + 3 secondary
+//  gamma strikes, and tints the background by dealer regime.
+//
+//  DAILY USE:
+//   1. Run the engine each morning -> it prints pine_seed.txt, e.g.
+//      callWall=2560,putWall=2500,hvl=2540,flip=2523.3,s1=2550,s2=2515,s3=2575,regime=SUPPRESSION
+//   2. Paste that whole line into the "Daily seed" input below.
+//   3. Levels + regime update instantly. (Leave seed blank to use
+//      the manual number inputs instead.)
+// =============================================================
+indicator("Gold Dealer Gamma Levels (XAUUSD)", overlay=true, max_lines_count=60, max_labels_count=60)
+
+// ---------- INPUTS ----------
+seed      = input.string("", "Daily seed (paste pine_seed line)", tooltip="key=value pairs from the engine. Overrides the manual numbers below when filled.")
+
+grpM      = "Manual levels (used only if seed is blank)"
+mCall     = input.float(0.0, "Call Wall",   group=grpM)
+mPut      = input.float(0.0, "Put Wall",    group=grpM)
+mHvl      = input.float(0.0, "HVL (magnet)",group=grpM)
+mFlip     = input.float(0.0, "Gamma Flip",  group=grpM)
+mS1       = input.float(0.0, "Secondary 1", group=grpM)
+mS2       = input.float(0.0, "Secondary 2", group=grpM)
+mS3       = input.float(0.0, "Secondary 3", group=grpM)
+mRegime   = input.string("AUTO", "Regime", options=["AUTO","SUPPRESSION","AMPLIFICATION"], group=grpM)
+
+grpS      = "Style"
+showLabels= input.bool(true,  "Show labels", group=grpS)
+showTint  = input.bool(true,  "Tint background by regime", group=grpS)
+lineLen   = input.int(60,     "Line length (bars, extend right)", minval=5, group=grpS)
+cCall     = input.color(color.new(color.red,   0), "Call Wall",  group=grpS)
+cPut      = input.color(color.new(color.lime,  0), "Put Wall",   group=grpS)
+cFlip     = input.color(color.new(color.orange,0), "Gamma Flip", group=grpS)
+cHvl      = input.color(color.new(color.yellow,0), "HVL",        group=grpS)
+cSec      = input.color(color.new(color.gray, 30), "Secondary",  group=grpS)
+
+// ---------- SEED PARSER ----------
+// returns the numeric value for `key` in a "k=v,k=v" string, or na
+getNum(string s, string key) =>
+    float out = na
+    if str.length(s) > 0
+        parts = str.split(s, ",")
+        for p in parts
+            kv = str.split(p, "=")
+            if array.size(kv) == 2
+                k = str.lower(str.trim(array.get(kv, 0)))
+                if k == str.lower(key)
+                    out := str.tonumber(str.trim(array.get(kv, 1)))
+    out
+
+getStr(string s, string key) =>
+    string out = na
+    if str.length(s) > 0
+        parts = str.split(s, ",")
+        for p in parts
+            kv = str.split(p, "=")
+            if array.size(kv) == 2
+                k = str.lower(str.trim(array.get(kv, 0)))
+                if k == str.lower(key)
+                    out := str.trim(array.get(kv, 1))
+    out
+
+useSeed = str.length(seed) > 0
+
+callW = useSeed ? getNum(seed, "callWall") : mCall
+putW  = useSeed ? getNum(seed, "putWall")  : mPut
+hvl   = useSeed ? getNum(seed, "hvl")      : mHvl
+flip  = useSeed ? getNum(seed, "flip")     : mFlip
+s1    = useSeed ? getNum(seed, "s1")       : mS1
+s2    = useSeed ? getNum(seed, "s2")       : mS2
+s3    = useSeed ? getNum(seed, "s3")       : mS3
+regRaw= useSeed ? getStr(seed, "regime")   : mRegime
+
+// Regime: explicit if provided, else infer from spot vs flip
+regime = na(regRaw) or regRaw == "AUTO" ? (not na(flip) and close < flip ? "AMPLIFICATION" : "SUPPRESSION") : str.upper(regRaw)
+isSuppression = regime == "SUPPRESSION"
+
+// ---------- DRAW ----------
+drawLevel(float price, color col, string txt, int width, string style) =>
+    if not na(price) and price > 0
+        ln = line.new(bar_index, price, bar_index + lineLen, price, xloc=xloc.bar_index, color=col, width=width, style=style)
+        if showLabels
+            label.new(bar_index + lineLen, price, txt + "  " + str.tostring(price, format.mintick), xloc=xloc.bar_index, style=label.style_label_left, textcolor=col, color=color.new(color.black, 100), size=size.small)
+        // keep only the latest instance clean
+        if barstate.islast
+            na
+
+// only draw on the last bar to avoid stacking history
+if barstate.islast
+    drawLevel(callW, cCall, "Call Wall",  2, line.style_solid)
+    drawLevel(putW,  cPut,  "Put Wall",   2, line.style_solid)
+    drawLevel(flip,  cFlip, "Gamma Flip", 2, line.style_dashed)
+    drawLevel(hvl,   cHvl,  "HVL",        2, line.style_solid)
+    drawLevel(s1,    cSec,  "Gamma",      1, line.style_dotted)
+    drawLevel(s2,    cSec,  "Gamma",      1, line.style_dotted)
+    drawLevel(s3,    cSec,  "Gamma",      1, line.style_dotted)
+
+// ---------- REGIME TINT + BADGE ----------
+bgcolor(showTint ? (isSuppression ? color.new(color.green, 92) : color.new(color.red, 92)) : na)
+
+if barstate.islast
+    var table t = table.new(position.top_right, 1, 1, border_width=1)
+    table.cell(t, 0, 0, (isSuppression ? "🟢 SUPPRESSION (fade extremes)" : "🔴 AMPLIFICATION (respect momentum)"), text_color=color.white, bgcolor=(isSuppression ? color.new(color.green, 20) : color.new(color.red, 20)), text_size=size.normal)
+
+// ---------- ALERTS ----------
+alertcondition(not na(callW) and ta.crossover(close, callW),  "Cross above Call Wall", "XAUUSD crossed above Call Wall")
+alertcondition(not na(putW)  and ta.crossunder(close, putW),  "Cross below Put Wall",  "XAUUSD crossed below Put Wall")
+alertcondition(not na(flip)  and ta.cross(close, flip),        "Gamma Flip cross",      "XAUUSD crossed the Gamma Flip — regime change")

@@ -1,0 +1,36 @@
+# Gold Dealer Positioning Engine — configuration
+
+# Data source: auto | dxfeed | yfinance
+#   auto     -> use dxfeed if DXFEED_TOKEN is set, else yfinance fallback
+#   dxfeed   -> require dxfeed (the real /GC book; "100% accuracy" path)
+#   yfinance -> free GLD-proxy fallback (great for building/testing offline)
+source: auto
+
+# Underlying references
+gc_symbol: "GC=F"        # front gold future (spot proxy) for the fallback path
+gld_symbol: "GLD"        # SPDR Gold Shares ETF (fallback options chain)
+
+# How many front expirations to include (nearest liquidity first)
+expirations: 2
+
+# Black–Scholes inputs used to (re)compute gamma across spot for the flip solver,
+# and to compute greeks on the fallback path. Keep risk_free current-ish.
+risk_free_rate: 0.045
+dividend_yield: 0.0       # GLD pays no dividend; /GC uses cost-of-carry ~ handled by basis
+
+# Dealer positioning sign convention (THIS IS AN ASSUMPTION — expose + document it)
+#   dealer_long_calls_short_puts  (standard "naive GEX")
+sign_convention: dealer_long_calls_short_puts
+
+# Price mapping.  Levels are computed in GOLD price space (~ /GC ~ spot).
+# XAUUSD = gold + basis_xau_gc.  Set from a live XAUUSD vs /GC read (usually a few $).
+basis_xau_gc: 0.0
+
+# Zero-gamma (flip) solver: scan +/- range_pct around spot in `steps` points.
+flip_scan:
+  range_pct: 0.05
+  steps: 101
+
+# Output
+output_dir: "./public"   # levels.json / brief.md / pine_seed.txt land here (also served to the dashboard)
+ladder_top: 12           # strikes shown on the gamma ladder

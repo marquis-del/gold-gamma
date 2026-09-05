@@ -1,0 +1,16 @@
+# Core
+numpy>=1.26
+pandas>=2.1
+scipy>=1.11
+PyYAML>=6.0
+python-dotenv>=1.0
+requests>=2.31
+
+# Free fallback data source (GLD options chain)
+yfinance>=0.2.40
+
+# dxFeed (PRIMARY — confirm the exact package/version for your account/entitlement).
+# The modern path is dxLink over WebSocket. Common options:
+#   pip install dxfeed          # Devexperts Python API (Graal-based builds vary)
+#   websockets>=12.0            # if implementing dxLink directly (see src/data_dxfeed.py)
+websockets>=12.0
