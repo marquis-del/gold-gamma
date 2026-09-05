@@ -120,7 +120,7 @@
     }
   ],
   "sign_convention": "dealer_long_calls_short_puts",
-  "asof_utc": "2026-09-05T14:22:35.955410+00:00",
+  "asof_utc": "2026-09-05T14:34:20.522485+00:00",
   "oi_date": "2026-09-04",
   "notes": "OI is prior-session settlement (T+1). Intraday flow not reflected."
 }
