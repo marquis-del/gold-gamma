@@ -32,5 +32,5 @@ flip_scan:
   steps: 101
 
 # Output
-output_dir: "./public"   # levels.json / brief.md / pine_seed.txt land here (also served to the dashboard)
+output_dir: "../docs"    # levels.json / brief.md / pine_seed.txt land here (repo-root docs/, served by GitHub Pages)
 ladder_top: 12           # strikes shown on the gamma ladder

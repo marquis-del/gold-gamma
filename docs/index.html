@@ -1,0 +1,371 @@
+<title>Gold Gamma Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#f4f1ea; --panel:#fffdf8; --panel-2:#efeade; --ink:#1c1a15; --ink-soft:#6b655a;
+    --line:#e0d9c8; --gold:#a7801a; --gold-bright:#c69320;
+    --sup:#1f7a55; --sup-bg:#e3f2ea; --amp:#c13c3c; --amp-bg:#f8e5e3;
+    --call:#c13c3c; --put:#1f7a55; --shadow:0 1px 3px rgba(40,34,20,.08),0 8px 24px rgba(40,34,20,.06);
+  }
+  /* dark + explicit-theme tokens defined in the block below */
+</style>
+<style>
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#131109; --panel:#1d1a11; --panel-2:#242015; --ink:#f3ecda; --ink-soft:#9c927c;
+      --line:#312b1c; --gold:#d9ad3f; --gold-bright:#e8bf52;
+      --sup:#4cc38a; --sup-bg:#12271d; --amp:#f0716c; --amp-bg:#2a1513;
+      --call:#f0716c; --put:#4cc38a; --shadow:0 1px 3px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#131109; --panel:#1d1a11; --panel-2:#242015; --ink:#f3ecda; --ink-soft:#9c927c;
+    --line:#312b1c; --gold:#d9ad3f; --gold-bright:#e8bf52;
+    --sup:#4cc38a; --sup-bg:#12271d; --amp:#f0716c; --amp-bg:#2a1513;
+    --call:#f0716c; --put:#4cc38a; --shadow:0 1px 3px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);
+    font-family:"Archivo",system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.45}
+  .wrap{max-width:480px;margin:0 auto;padding:18px 16px 40px;display:flex;flex-direction:column;gap:14px}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+
+  /* header */
+  header{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .mark{width:34px;height:34px;border-radius:9px;background:
+    radial-gradient(120% 120% at 30% 20%,var(--gold-bright),var(--gold) 60%,#7a5c12);
+    display:grid;place-items:center;color:#1a1405;font-weight:800;font-size:17px;
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.4)}
+  .brand h1{font-size:16px;margin:0;font-weight:700;letter-spacing:-.01em}
+  .brand p{margin:0;font-size:11px;color:var(--ink-soft)}
+  .themebtn{border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);
+    border-radius:9px;padding:7px 9px;font-size:15px;cursor:pointer}
+
+  /* regime banner */
+  .regime{border-radius:16px;padding:16px 16px 15px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .regime.sup{background:var(--sup-bg);border:1px solid color-mix(in srgb,var(--sup) 30%,transparent)}
+  .regime.amp{background:var(--amp-bg);border:1px solid color-mix(in srgb,var(--amp) 30%,transparent)}
+  .regime .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .regime .state{font-size:22px;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:9px}
+  .regime.sup .state{color:var(--sup)} .regime.amp .state{color:var(--amp)}
+  .dot{width:11px;height:11px;border-radius:50%}
+  .regime.sup .dot{background:var(--sup);box-shadow:0 0 0 4px color-mix(in srgb,var(--sup) 22%,transparent)}
+  .regime.amp .dot{background:var(--amp);box-shadow:0 0 0 4px color-mix(in srgb,var(--amp) 22%,transparent)}
+  .regime .tag{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+    padding:4px 8px;border-radius:999px;background:var(--panel);color:var(--ink-soft);border:1px solid var(--line)}
+  .regime .desc{margin:9px 0 0;font-size:13px;color:var(--ink-soft);line-height:1.5}
+  .regime .desc b{color:var(--ink);font-weight:600}
+
+  /* spot readout */
+  .spotline{display:flex;align-items:baseline;justify-content:space-between;padding:2px 2px 0}
+  .spotline .px{font-size:30px;font-weight:600}
+  .spotline .lbl{font-size:12px;color:var(--ink-soft)}
+  .spotline .chg{font-size:13px;font-weight:600}
+
+  /* gauge */
+  .gauge{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 16px 14px;box-shadow:var(--shadow)}
+  .gauge .cap{display:flex;justify-content:space-between;margin-bottom:22px}
+  .track{position:relative;height:8px;border-radius:99px;
+    background:linear-gradient(90deg,var(--put) 0%,color-mix(in srgb,var(--put) 30%,var(--panel-2)) 30%,var(--panel-2) 50%,color-mix(in srgb,var(--call) 30%,var(--panel-2)) 70%,var(--call) 100%)}
+  .mk{position:absolute;top:50%;transform:translate(-50%,-50%)}
+  .mk .stem{width:2px;height:26px;margin:0 auto;background:var(--ink-soft);opacity:.5}
+  .mk.flip .stem{background:var(--gold);opacity:1;width:2px;height:34px;border-radius:2px}
+  .mk .cap2{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;
+    font-size:10px;color:var(--ink-soft);top:-18px;font-weight:600}
+  .mk .val{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;
+    font-size:11px;top:30px;font-weight:600}
+  .spotmk{position:absolute;top:50%;transform:translate(-50%,-50%);z-index:3}
+  .spotmk .pin{width:16px;height:16px;border-radius:50%;background:var(--gold-bright);
+    border:3px solid var(--panel);box-shadow:0 0 0 1px var(--gold),0 2px 6px rgba(0,0,0,.3)}
+  .spotmk .flag{position:absolute;left:50%;transform:translateX(-50%);top:-26px;white-space:nowrap;
+    background:var(--gold);color:#1a1405;font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px}
+  .gauge .ends{display:flex;justify-content:space-between;margin-top:40px;font-size:11px;color:var(--ink-soft)}
+
+  /* level cards */
+  .lvls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 13px 12px;box-shadow:var(--shadow)}
+  .card .k{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;display:flex;align-items:center;gap:6px}
+  .card .k .sw{width:8px;height:8px;border-radius:2px}
+  .card .v{font-size:23px;font-weight:600;margin-top:5px}
+  .card .d{font-size:12px;color:var(--ink-soft);margin-top:2px}
+  .card.hero{grid-column:1/-1;display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .card.hero .v{font-size:27px}
+  .up{color:var(--sup)} .down{color:var(--amp)}
+
+  /* exposure tiles */
+  .expo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .expo .card .v{font-size:21px}
+  .bar{height:6px;border-radius:99px;background:var(--panel-2);margin-top:9px;overflow:hidden;display:flex}
+  .bar i{display:block;height:100%}
+
+  /* ladder */
+  .ladder{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 14px 14px;box-shadow:var(--shadow)}
+  .ladder h3{margin:0 0 3px;font-size:14px;font-weight:700}
+  .ladder .sub{font-size:11px;color:var(--ink-soft);margin:0 0 14px}
+  .rung{display:grid;grid-template-columns:52px 1fr;align-items:center;gap:10px;margin:7px 0}
+  .rung .str{font-size:12px;color:var(--ink-soft);text-align:right;font-weight:500}
+  .rung .str.hot{color:var(--gold);font-weight:700}
+  .rung .g{position:relative;height:18px;display:flex;align-items:center}
+  .rung .g i{position:absolute;height:14px;border-radius:4px;left:50%}
+  .rung .g .cpos{background:color-mix(in srgb,var(--call) 78%,transparent)}
+  .rung .g .cneg{background:color-mix(in srgb,var(--put) 78%,transparent);transform:translateX(-100%)}
+  .rung .g .mid{position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--line)}
+  .ladder .axis{display:flex;justify-content:space-between;font-size:10px;color:var(--ink-soft);margin-top:8px;padding-top:6px;border-top:1px solid var(--line)}
+
+  /* plan */
+  .plan{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+  .plan h3{margin:0 0 10px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .plan h3 .sw{width:14px;height:3px;border-radius:2px;background:var(--gold)}
+  .plan ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+  .plan li{font-size:13px;line-height:1.5;color:var(--ink);padding-left:16px;position:relative}
+  .plan li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+  .plan li b{font-weight:600}
+  .plan .mono{color:var(--gold)}
+
+  /* footer */
+  .foot{display:flex;flex-direction:column;gap:8px;margin-top:2px}
+  .sample{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-soft);
+    background:var(--panel-2);border:1px dashed var(--line);border-radius:10px;padding:9px 11px}
+  .sample b{color:var(--gold)}
+  .meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11px;color:var(--ink-soft)}
+  .meta span b{color:var(--ink);font-weight:600}
+  .refresh{align-self:flex-start;border:1px solid var(--line);background:var(--panel);color:var(--ink);
+    border-radius:9px;padding:8px 13px;font-size:13px;font-weight:600;cursor:pointer;display:flex;gap:7px;align-items:center}
+  .disc{font-size:10px;color:var(--ink-soft);line-height:1.5;margin-top:4px}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="mark">Au</div>
+      <div>
+        <h1>Gold Gamma Desk</h1>
+        <p>Dealer positioning · XAU/USD · /GC book</p>
+      </div>
+    </div>
+    <button class="themebtn" id="themeBtn" aria-label="Toggle theme">◐</button>
+  </header>
+
+  <!-- REGIME -->
+  <section class="regime sup" id="regime">
+    <div class="row">
+      <div class="state"><span class="dot"></span><span id="regimeName">Suppression</span></div>
+      <span class="tag" id="regimeTag">Positive gamma</span>
+    </div>
+    <p class="desc" id="regimeDesc">Spot is <b>above the gamma flip</b> and net dealer gamma is positive. Dealers <b>buy dips and sell rallies</b> — expect a contained, mean-reverting tape. Fade extremes back toward the magnet.</p>
+  </section>
+
+  <!-- SPOT -->
+  <div class="spotline">
+    <div><div class="lbl">XAU/USD spot</div><span class="px mono" id="spotPx">2,536.40</span></div>
+    <div style="text-align:right"><div class="lbl">vs flip</div><span class="chg mono up" id="flipDist">+13.1 above</span></div>
+  </div>
+
+  <!-- GAUGE -->
+  <section class="gauge">
+    <div class="cap"><span class="eyebrow">Put wall</span><span class="eyebrow" style="color:var(--gold)">Gamma flip</span><span class="eyebrow" style="text-align:right">Call wall</span></div>
+    <div class="track" id="track">
+      <div class="mk" style="left:66.7%" id="mkHvl"><div class="cap2">HVL</div><div class="stem"></div><div class="val mono">2,540</div></div>
+      <div class="mk flip" style="left:38.8%" id="mkFlip"><div class="cap2" style="color:var(--gold)">Flip</div><div class="stem"></div><div class="val mono" style="color:var(--gold)">2,523</div></div>
+      <div class="spotmk" style="left:60.7%" id="mkSpot"><div class="flag mono">2,536</div><div class="pin"></div></div>
+    </div>
+    <div class="ends"><span class="mono">2,500</span><span class="mono">2,560</span></div>
+  </section>
+
+  <!-- LEVELS -->
+  <div class="lvls">
+    <div class="card">
+      <div class="k"><span class="sw" style="background:var(--call)"></span>Call wall</div>
+      <div class="v mono" id="callWall">2,560</div><div class="d" id="callDist">resistance · +23.6 (0.9%)</div>
+    </div>
+    <div class="card">
+      <div class="k"><span class="sw" style="background:var(--put)"></span>Put wall</div>
+      <div class="v mono" id="putWall">2,500</div><div class="d" id="putDist">support · −36.4 (1.4%)</div>
+    </div>
+    <div class="card hero">
+      <div><div class="k"><span class="sw" style="background:var(--gold)"></span>HVL — magnet strike</div>
+      <div class="d">highest absolute gamma · price gravitates here into expiry</div></div>
+      <div class="v mono" style="color:var(--gold)" id="hvl">2,540</div>
+    </div>
+  </div>
+
+  <!-- EXPOSURE -->
+  <div class="expo">
+    <div class="card">
+      <div class="k">Net GEX</div>
+      <div class="v mono up" id="gex">+$1.83B</div>
+      <div class="d">per 1% move · dealers long gamma</div>
+      <div class="bar"><i style="width:72%;background:var(--sup)"></i><i style="flex:1;background:transparent"></i></div>
+    </div>
+    <div class="card">
+      <div class="k">Net DEX</div>
+      <div class="v mono down" id="dex">−$0.42B</div>
+      <div class="d">standing hedge lean · net short delta</div>
+      <div class="bar"><i style="flex:1;background:transparent"></i><i style="width:0"></i><i style="width:38%;background:var(--amp)"></i></div>
+    </div>
+  </div>
+
+  <!-- LADDER -->
+  <section class="ladder">
+    <h3>Gamma by strike</h3>
+    <p class="sub">Call gamma (right) vs put gamma (left) · /GC + GLD combined book</p>
+    <div id="rungs"></div>
+    <div class="axis"><span>◄ Put gamma (support)</span><span>Call gamma (resistance) ►</span></div>
+  </section>
+
+  <!-- PLAN -->
+  <section class="plan">
+    <h3><span class="sw"></span>Today's game plan</h3>
+    <ul>
+      <li>Regime is <b>suppression</b> while price holds above the flip at <span class="mono">2,523</span> — <b>fade rallies</b> into the call wall <span class="mono">2,560</span> and <b>buy dips</b> toward the HVL magnet <span class="mono">2,540</span>.</li>
+      <li>The <b>magnet at 2,540</b> is the day's center of gravity; expect chop to pull price back to it, especially into the COMEX expiry window.</li>
+      <li><b>Losing 2,523 flips the regime</b> to amplification — momentum turns on, the put wall <span class="mono">2,500</span> becomes the next real support, and breakdowns extend rather than revert.</li>
+      <li>Net <b>DEX is short</b>, so dealer delta hedging leans as a mild headwind on rallies until positioning rebalances.</li>
+    </ul>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <button class="refresh" id="refreshBtn">↻ Refresh levels</button>
+    <div class="sample"><b>◆ Sample data.</b>&nbsp;Wire this to your engine's <span class="mono">levels.json</span> to go live.</div>
+    <div class="meta">
+      <span>Updated <b id="asof">—</b></span>
+      <span>OI date <b>2026-09-04 (T+1)</b></span>
+      <span>Source <b>dxFeed /GC</b></span>
+    </div>
+    <p class="disc">Open interest is prior-session settlement; intraday flow is not reflected. Dealer sign convention: long calls / short puts (adjustable). Positioning context only — not financial advice.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  // Point this at your engine's output. Relative "levels.json" works when you
+  // self-host index.html next to it. (The claude.ai preview sandbox blocks
+  // outside fetches, so there it always shows the sample below — that's expected.)
+  const LEVELS_URL = "levels.json";
+  // ---- Sample payload: mirrors the engine's levels.json schema ----
+  const data = {
+    asof_utc: new Date().toISOString(),
+    underlying:{ xauusd:2536.40 },
+    regime:{ state:"SUPPRESSION", net_gex:1.83e9, net_dex:-0.42e9, flip:2523.3 },
+    levels:{ call_wall:2560, put_wall:2500, hvl:2540 },
+    // strike : {call, put} gamma-notional in $ (sign handled by side)
+    ladder:[
+      {k:2575, call:0.34, put:0.02},
+      {k:2560, call:0.91, put:0.05},
+      {k:2550, call:0.62, put:0.09},
+      {k:2540, call:0.40, put:0.44},
+      {k:2530, call:0.18, put:0.38},
+      {k:2520, call:0.08, put:0.55},
+      {k:2510, call:0.04, put:0.47},
+      {k:2500, call:0.02, put:0.86}
+    ]
+  };
+
+  const $=s=>document.querySelector(s);
+  const fmt=n=>n.toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:1});
+  const money=n=>{const s=n<0?"−":"+";return s+"$"+Math.abs(n/1e9).toFixed(2)+"B";};
+
+  function render(){
+    const d=data, L=d.levels, R=d.regime, spot=d.underlying.xauusd;
+    // regime
+    const sup=R.state==="SUPPRESSION";
+    const reg=$("#regime");
+    reg.className="regime "+(sup?"sup":"amp");
+    $("#regimeName").textContent=sup?"Suppression":"Amplification";
+    $("#regimeTag").textContent=(R.net_gex>=0?"Positive":"Negative")+" gamma";
+    $("#regimeDesc").innerHTML= sup
+      ? 'Spot is <b>above the gamma flip</b> and net dealer gamma is positive. Dealers <b>buy dips and sell rallies</b> — expect a contained, mean-reverting tape. Fade extremes toward the magnet.'
+      : 'Spot is <b>below the gamma flip</b> and net dealer gamma is negative. Dealers <b>sell declines and buy rallies</b> — expect a trending, volatile tape. Respect momentum and breakouts.';
+    // spot
+    $("#spotPx").textContent=fmt(spot);
+    const fd=spot-R.flip;
+    const fdEl=$("#flipDist");
+    fdEl.textContent=(fd>=0?"+":"−")+fmt(Math.abs(fd))+(fd>=0?" above":" below");
+    fdEl.className="chg mono "+(fd>=0?"up":"down");
+    // cards
+    $("#callWall").textContent=fmt(L.call_wall);
+    $("#putWall").textContent=fmt(L.put_wall);
+    $("#hvl").textContent=fmt(L.hvl);
+    const cw=L.call_wall-spot, pw=spot-L.put_wall;
+    $("#callDist").textContent="resistance · +"+fmt(cw)+" ("+(cw/spot*100).toFixed(1)+"%)";
+    $("#putDist").textContent="support · −"+fmt(pw)+" ("+(pw/spot*100).toFixed(1)+"%)";
+    // exposure
+    const gx=$("#gex"); gx.textContent=money(R.net_gex); gx.className="v mono "+(R.net_gex>=0?"up":"down");
+    const dx=$("#dex"); dx.textContent=money(R.net_dex); dx.className="v mono "+(R.net_dex>=0?"up":"down");
+    // gauge positions (put_wall..call_wall)
+    const lo=L.put_wall, hi=L.call_wall, span=hi-lo;
+    const pos=v=>Math.max(0,Math.min(100,(v-lo)/span*100));
+    $("#mkFlip").style.left=pos(R.flip)+"%";
+    $("#mkFlip").querySelector(".val").textContent=fmt(R.flip);
+    $("#mkHvl").style.left=pos(L.hvl)+"%";
+    $("#mkHvl").querySelector(".val").textContent=fmt(L.hvl);
+    const sm=$("#mkSpot"); sm.style.left=pos(spot)+"%"; sm.querySelector(".flag").textContent=fmt(spot);
+    // ladder
+    const maxG=Math.max(...d.ladder.map(r=>Math.max(r.call,r.put)));
+    $("#rungs").innerHTML=d.ladder.map(r=>{
+      const hot=r.k===L.hvl;
+      const cw2=(r.call/maxG*48).toFixed(1), pw2=(r.put/maxG*48).toFixed(1);
+      return `<div class="rung">
+        <div class="str${hot?' hot':''}">${fmt(r.k)}</div>
+        <div class="g"><div class="mid"></div>
+          <i class="cneg" style="width:${pw2}%"></i>
+          <i class="cpos" style="width:${cw2}%"></i>
+        </div></div>`;
+    }).join("");
+    // meta
+    $("#asof").textContent=new Date(d.asof_utc).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+  }
+
+  // theme toggle (respects the three-state model)
+  $("#themeBtn").addEventListener("click",()=>{
+    const r=document.documentElement;
+    const cur=r.getAttribute("data-theme");
+    const sysDark=matchMedia("(prefers-color-scheme: dark)").matches;
+    const next = cur? (cur==="dark"?"light":"dark") : (sysDark?"light":"dark");
+    r.setAttribute("data-theme",next);
+  });
+
+  $("#refreshBtn").addEventListener("click",async function(){
+    const b=this; b.textContent="↻ Refreshing…";
+    await init();
+    b.textContent="↻ Refresh levels";
+  });
+
+  // ---- Live wiring: read the engine's levels.json (SPEC schema) ----
+  function normalize(j){
+    const flip = (j.regime && j.regime.flip) ? j.regime.flip.xauusd : null;
+    return {
+      asof_utc: j.asof_utc || new Date().toISOString(),
+      data_source: j.data_source,
+      oi_date: j.oi_date,
+      underlying:{ xauusd: j.underlying.xauusd },
+      regime:{ state:j.regime.state, net_gex:j.regime.net_gex, net_dex:j.regime.net_dex, flip:flip },
+      levels:{ call_wall:j.levels_xauusd.call_wall, put_wall:j.levels_xauusd.put_wall, hvl:j.levels_xauusd.hvl },
+      ladder:(j.ladder||[]).map(r=>({k:r.strike_xau, call:Math.abs(r.call_gex||0), put:Math.abs(r.put_gex||0)}))
+    };
+  }
+  function applyLive(n){
+    Object.assign(data, n);
+    const badge=document.querySelector(".sample"); if(badge) badge.hidden=true;
+    render();
+  }
+  async function init(){
+    if(LEVELS_URL){
+      try{
+        const res=await fetch(LEVELS_URL,{cache:"no-store"});
+        if(res.ok){ applyLive(normalize(await res.json())); return; }
+      }catch(e){ /* blocked/offline -> sample */ }
+    }
+    render();
+  }
+  init();
+})();
+</script>
