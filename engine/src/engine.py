@@ -35,6 +35,13 @@ def _point_gamma_delta(df, S, r, q):
     return g, d
 
 
+def _point_vanna_charm(df, S, r, q):
+    """dxFeed doesn't hand these over in the current scaffold, so always BSM these."""
+    vn = greeks.vanna(S, df["strike"].values, df["T"].values, r, q, df["iv"].values)
+    ch = greeks.charm(S, df["strike"].values, df["T"].values, r, q, df["iv"].values, df["type"].values)
+    return vn, ch
+
+
 def _total_gex_at(Sp, df, r, q, sign):
     """Net GEX ($/1% move) if spot were Sp — gamma recomputed via BSM at Sp."""
     g = greeks.gamma(Sp, df["strike"].values, df["T"].values, r, q, df["iv"].values)
@@ -59,6 +66,17 @@ def _solve_flip(df, S, r, q, sign, range_pct, steps):
     return float(min(crossings, key=lambda x: abs(x - S)))
 
 
+def _round_confluence(level, step, tolerance):
+    """Is `level` within `tolerance` of a round multiple of `step`? Round numbers
+    are where institutional /GC futures gamma and ETF (GLD) gamma are most likely
+    to line up, per common dealer-hedging commentary -- useful confirmation when
+    this book is GLD-proxy only (no live /GC chain)."""
+    if level is None:
+        return None
+    nearest = round(level / step) * step
+    return {"is_confluence": abs(level - nearest) <= tolerance, "nearest_round": nearest}
+
+
 def compute(df: pd.DataFrame, meta: dict, cfg: dict) -> dict:
     S = float(meta["S_gold"])
     r = float(cfg.get("risk_free_rate", 0.045))
@@ -74,8 +92,14 @@ def compute(df: pd.DataFrame, meta: dict, cfg: dict) -> dict:
     df["gex"] = sign * g * df["oi"].values * MULT * S ** 2 * 0.01
     df["dex"] = sign * d * df["oi"].values * MULT * S           # dealer delta $-notional
 
+    vn, ch = _point_vanna_charm(df, S, r, q)
+    df["vex"] = sign * vn * df["oi"].values * MULT * S * 0.01   # $ delta exposure per 1-vol-point IV move
+    df["cex"] = sign * ch * df["oi"].values * MULT * S / 365.0  # $ delta bleed per day (time decay of delta)
+
     net_gex = float(df["gex"].sum())
     net_dex = float(df["dex"].sum())
+    net_vex = float(df["vex"].sum())
+    net_cex = float(df["cex"].sum())
 
     # per-strike aggregation (gold space)
     by = df.groupby("strike")
@@ -93,6 +117,9 @@ def compute(df: pd.DataFrame, meta: dict, cfg: dict) -> dict:
 
     flip = _solve_flip(df, S, r, q, sign,
                        cfg["flip_scan"]["range_pct"], cfg["flip_scan"]["steps"])
+
+    round_step = float(cfg.get("round_number_step", 50))
+    round_tol = float(cfg.get("round_number_tolerance", 10))
 
     if flip is not None:
         state = "SUPPRESSION" if (S > flip and net_gex > 0) else "AMPLIFICATION"
@@ -126,11 +153,14 @@ def compute(df: pd.DataFrame, meta: dict, cfg: dict) -> dict:
             "gld": round(meta.get("gld_price", S / ratio), 2),
             "basis_xau_gc": round(basis, 2),
             "gld_to_gold_ratio": round(ratio, 4),
+            "etf_venues": meta.get("etf_venues", []),
         },
         "regime": {
             "state": state,
             "net_gex": net_gex,
             "net_dex": net_dex,
+            "net_vex": net_vex,
+            "net_cex": net_cex,
             "flip": scales(flip),
         },
         "levels_xauusd": {
@@ -139,6 +169,14 @@ def compute(df: pd.DataFrame, meta: dict, cfg: dict) -> dict:
             "hvl": scales(hvl)["xauusd"],
             "gamma_flip": (scales(flip) or {}).get("xauusd") if flip else None,
             "secondary": [scales(s)["xauusd"] for s in secondary],
+        },
+        "round_confluence": {
+            "call_wall": _round_confluence((scales(call_wall) or {}).get("xauusd") if call_wall else None, round_step, round_tol),
+            "put_wall": _round_confluence((scales(put_wall) or {}).get("xauusd") if put_wall else None, round_step, round_tol),
+            "hvl": _round_confluence(scales(hvl)["xauusd"], round_step, round_tol),
+            "gamma_flip": _round_confluence((scales(flip) or {}).get("xauusd") if flip else None, round_step, round_tol),
+            "step": round_step, "tolerance": round_tol,
+            "note": "Round levels are where institutional /GC futures gamma and ETF (GLD) gamma are most likely to align -- this book is GLD-proxy only until dxFeed is live, so treat round-number confluence as the higher-confidence levels.",
         },
         "levels_gc": {
             "call_wall": call_wall, "put_wall": put_wall, "hvl": hvl,

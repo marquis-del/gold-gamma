@@ -223,6 +223,16 @@
       <div class="d">standing hedge lean · net short delta</div>
       <div class="bar"><i style="flex:1;background:transparent"></i><i style="width:0"></i><i style="width:38%;background:var(--amp)"></i></div>
     </div>
+    <div class="card">
+      <div class="k">Net VEX</div>
+      <div class="v mono" id="vex">—</div>
+      <div class="d">Δdelta per 1 vol-point move</div>
+    </div>
+    <div class="card">
+      <div class="k">Net CEX / day</div>
+      <div class="v mono" id="cex">—</div>
+      <div class="d">delta bleed from time decay alone</div>
+    </div>
   </div>
 
   <!-- MACRO REGIME -->
@@ -261,10 +271,11 @@
   <!-- LADDER -->
   <section class="ladder">
     <h3>Gamma by strike</h3>
-    <p class="sub">Call gamma (right) vs put gamma (left) · /GC + GLD combined book</p>
+    <p class="sub">Call gamma (right) vs put gamma (left) · /GC + <span id="etfVenues">GLD</span> combined book</p>
     <div id="rungs"></div>
     <div class="axis"><span>◄ Put gamma (support)</span><span>Call gamma (resistance) ►</span></div>
     <p class="corrnote">GLD-proxy trust check — <b>GC/GLD price correlation: <span id="corrGcGld">—</span></b> (30d daily returns; GLD strikes are converted to /GC-equivalent gold price for this book)</p>
+    <p class="corrnote">⭐ on a level = within a round-number band, where institutional /GC futures gamma and ETF (GLD) gamma are most likely to align</p>
   </section>
 
   <!-- PLAN -->
@@ -299,8 +310,9 @@
     data_source: "sample",
     oi_date: "2026-09-04",
     underlying:{ xauusd:2536.40 },
-    regime:{ state:"SUPPRESSION", net_gex:1.83e9, net_dex:-0.42e9, flip:2523.3 },
+    regime:{ state:"SUPPRESSION", net_gex:1.83e9, net_dex:-0.42e9, net_vex:0.31e9, net_cex:-0.09e9, flip:2523.3 },
     levels:{ call_wall:2560, put_wall:2500, hvl:2540 },
+    round_confluence:{ call_wall:{is_confluence:false}, put_wall:{is_confluence:true}, hvl:{is_confluence:false}, gamma_flip:{is_confluence:false} },
     macro:{
       regime:{state:"MIXED", description:"Sample data — wire levels.json for a live macro read."},
       dxy:{level:104.2, chg_5d_pct:0.3},
@@ -381,25 +393,30 @@
       : 'Spot is <b>below the gamma flip</b> and net dealer gamma is negative. Dealers <b>sell declines and buy rallies</b> — expect a trending, volatile tape. Respect momentum and breakouts.';
     // spot
     $("#spotPx").textContent=fmt(spot);
+    if(d.underlying.etf_venues && d.underlying.etf_venues.length) $("#etfVenues").textContent=d.underlying.etf_venues.join("+");
     const fd=spot-R.flip;
     const fdEl=$("#flipDist");
     fdEl.textContent=(fd>=0?"+":"−")+fmt(Math.abs(fd))+(fd>=0?" above":" below");
     fdEl.className="chg mono "+(fd>=0?"up":"down");
     // cards
-    $("#callWall").textContent=fmt(L.call_wall);
-    $("#putWall").textContent=fmt(L.put_wall);
-    $("#hvl").textContent=fmt(L.hvl);
+    const RC=d.round_confluence||{};
+    const star=k=>(RC[k]&&RC[k].is_confluence)?" ⭐":"";
+    $("#callWall").textContent=fmt(L.call_wall)+star("call_wall");
+    $("#putWall").textContent=fmt(L.put_wall)+star("put_wall");
+    $("#hvl").textContent=fmt(L.hvl)+star("hvl");
     const cw=L.call_wall-spot, pw=spot-L.put_wall;
     $("#callDist").textContent="resistance · +"+fmt(cw)+" ("+(cw/spot*100).toFixed(1)+"%)";
     $("#putDist").textContent="support · −"+fmt(pw)+" ("+(pw/spot*100).toFixed(1)+"%)";
     // exposure
     const gx=$("#gex"); gx.textContent=money(R.net_gex); gx.className="v mono "+(R.net_gex>=0?"up":"down");
     const dx=$("#dex"); dx.textContent=money(R.net_dex); dx.className="v mono "+(R.net_dex>=0?"up":"down");
+    if(R.net_vex!=null){ const vx=$("#vex"); vx.textContent=money(R.net_vex); vx.className="v mono "+(R.net_vex>=0?"up":"down"); }
+    if(R.net_cex!=null){ const cx=$("#cex"); cx.textContent=money(R.net_cex); cx.className="v mono "+(R.net_cex>=0?"up":"down"); }
     // gauge positions (put_wall..call_wall)
     const lo=L.put_wall, hi=L.call_wall, span=hi-lo;
     const pos=v=>Math.max(0,Math.min(100,(v-lo)/span*100));
     $("#mkFlip").style.left=pos(R.flip)+"%";
-    $("#mkFlip").querySelector(".val").textContent=fmt(R.flip);
+    $("#mkFlip").querySelector(".val").textContent=fmt(R.flip)+star("gamma_flip");
     $("#mkHvl").style.left=pos(L.hvl)+"%";
     $("#mkHvl").querySelector(".val").textContent=fmt(L.hvl);
     const sm=$("#mkSpot"); sm.style.left=pos(spot)+"%"; sm.querySelector(".flag").textContent=fmt(spot);
@@ -461,12 +478,14 @@
       asof_utc: j.asof_utc || new Date().toISOString(),
       data_source: j.data_source,
       oi_date: j.oi_date,
-      underlying:{ xauusd: j.underlying.xauusd },
-      regime:{ state:j.regime.state, net_gex:j.regime.net_gex, net_dex:j.regime.net_dex, flip:flip },
+      underlying:{ xauusd: j.underlying.xauusd, etf_venues: j.underlying.etf_venues },
+      regime:{ state:j.regime.state, net_gex:j.regime.net_gex, net_dex:j.regime.net_dex,
+               net_vex:j.regime.net_vex, net_cex:j.regime.net_cex, flip:flip },
       levels:{ call_wall:j.levels_xauusd.call_wall, put_wall:j.levels_xauusd.put_wall, hvl:j.levels_xauusd.hvl },
       ladder:(j.ladder||[]).map(r=>({k:r.strike_xau, call:Math.abs(r.call_gex||0), put:Math.abs(r.put_gex||0)})),
     };
     if(macro) out.macro = macro;
+    if(j.round_confluence) out.round_confluence = j.round_confluence;
     return out;
   }
   function applyLive(n){

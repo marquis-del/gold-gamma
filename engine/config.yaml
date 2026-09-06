@@ -8,7 +8,8 @@ source: auto
 
 # Underlying references
 gc_symbol: "GC=F"        # front gold future (spot proxy) for the fallback path
-gld_symbol: "GLD"        # SPDR Gold Shares ETF (fallback options chain)
+gld_symbol: "GLD"        # SPDR Gold Shares ETF (primary fallback options chain / underlying.gld display)
+etf_symbols: ["GLD", "IAU"]   # ETF option chains combined into one book (GLD + iShares Gold Trust)
 
 # How many front expirations to include (nearest liquidity first)
 expirations: 2
@@ -34,3 +35,9 @@ flip_scan:
 # Output
 output_dir: "../docs"    # levels.json / brief.md / pine_seed.txt land here (repo-root docs/, served by GitHub Pages)
 ladder_top: 12           # strikes shown on the gamma ladder
+
+# Round-number confluence: institutional /GC futures gamma isn't in this book yet
+# (GLD-proxy only, until dxFeed is live) -- round levels are where the futures and
+# ETF dealer books are most likely to line up, so flag walls/flip/HVL near one.
+round_number_step: 50
+round_number_tolerance: 10

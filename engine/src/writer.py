@@ -17,10 +17,16 @@ def _money(x):
     return f"{s}${abs(x)/1e9:.2f}B"
 
 
+def _star(rc: dict, key: str) -> str:
+    hit = (rc or {}).get(key) or {}
+    return " ⭐" if hit.get("is_confluence") else ""
+
+
 def build_brief(result: dict) -> str:
     L = result["levels_xauusd"]
     R = result["regime"]
     u = result["underlying"]
+    RC = result.get("round_confluence")
     spot = u["xauusd"]
     flip = L.get("gamma_flip")
     sup = R["state"] == "SUPPRESSION"
@@ -28,8 +34,10 @@ def build_brief(result: dict) -> str:
         f"# Gold Gamma Brief — {dt.date.today():%A %b %d, %Y}",
         "",
         f"**Spot (XAUUSD):** {_fmt(spot)}  |  **Source:** {result['data_source']}",
-        f"**Regime:** {R['state']}  |  **Net GEX:** {_money(R['net_gex'])}  |  **Net DEX:** {_money(R['net_dex'])}",
-        f"**Gamma flip:** {_fmt(flip)}  |  **Call wall:** {_fmt(L['call_wall'])}  |  **Put wall:** {_fmt(L['put_wall'])}  |  **HVL:** {_fmt(L['hvl'])}",
+        f"**Regime:** {R['state']}  |  **Net GEX:** {_money(R['net_gex'])}  |  **Net DEX:** {_money(R['net_dex'])}"
+        f"  |  **Net VEX:** {_money(R.get('net_vex'))}  |  **Net CEX/day:** {_money(R.get('net_cex'))}",
+        f"**Gamma flip:** {_fmt(flip)}{_star(RC,'gamma_flip')}  |  **Call wall:** {_fmt(L['call_wall'])}{_star(RC,'call_wall')}"
+        f"  |  **Put wall:** {_fmt(L['put_wall'])}{_star(RC,'put_wall')}  |  **HVL:** {_fmt(L['hvl'])}{_star(RC,'hvl')}",
         "",
         "## Game plan",
     ]
@@ -57,6 +65,8 @@ def build_brief(result: dict) -> str:
             f"gold/DXY corr {M['correlations']['gold_vs_dxy']}  |  gold/SPX corr {M['correlations']['gold_vs_spx']}",
             f"_GLD-proxy trust check — GC/GLD {M['window_days']}d return correlation: {M['correlations']['gc_vs_gld']}._",
         ]
+    if RC and any((RC.get(k) or {}).get("is_confluence") for k in ("call_wall", "put_wall", "hvl", "gamma_flip")):
+        lines += ["", f"_⭐ = within ${RC['tolerance']:g} of a round ${RC['step']:g} level — {RC['note']}_"]
     lines += ["", f"_OI is prior-session settlement (T+1). Sign convention: {result['sign_convention']}. Positioning context, not financial advice._"]
     return "\n".join(lines)
 
