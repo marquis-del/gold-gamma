@@ -1,18 +1,18 @@
-# Gold Gamma Brief — Sunday Sep 06, 2026
+# Gold Gamma Brief — Tuesday Sep 08, 2026
 
-**Spot (XAUUSD):** 4,476.6  |  **Source:** yfinance:GLD+IAU
-**Regime:** SUPPRESSION  |  **Net GEX:** +$0.08B  |  **Net DEX:** +$5.94B  |  **Net VEX:** +$0.13B  |  **Net CEX/day:** -$0.41B
-**Gamma flip:** 4,471.0  |  **Call wall:** 4,512.1  |  **Put wall:** 4,446.1 ⭐  |  **HVL:** 4,446.1 ⭐
+**Spot (XAUUSD):** 4,447.9  |  **Source:** yfinance:GLD+IAU
+**Regime:** SUPPRESSION  |  **Net GEX:** +$0.02B  |  **Net DEX:** +$5.91B  |  **Net VEX:** +$0.01B  |  **Net CEX/day:** -$0.01B
+**Gamma flip:** 4,447.8 ⭐  |  **Call wall:** 4,466.5  |  **Put wall:** 4,445.2 ⭐  |  **HVL:** 4,466.5
 
 ## Game plan
-- Positive gamma / above flip 4,471.0: contained, mean-reverting tape.
-- Fade rallies into the call wall 4,512.1; buy dips toward the HVL magnet 4,446.1.
-- Losing 4,471.0 flips to AMPLIFICATION — momentum turns on, next support the put wall 4,446.1.
+- Positive gamma / above flip 4,447.8: contained, mean-reverting tape.
+- Fade rallies into the call wall 4,466.5; buy dips toward the HVL magnet 4,466.5.
+- Losing 4,447.8 flips to AMPLIFICATION — momentum turns on, next support the put wall 4,445.2.
 
 ## Macro backdrop
 **Regime:** MIXED — Dollar and yield signals aren't aligned over the last 5 days.
-DXY 99.2 (-0.54% 5d)  |  real 10Y 2.42%  |  gold/DXY corr -0.58  |  gold/SPX corr 0.31
-_GLD-proxy trust check — GC/GLD 30d return correlation: 0.94._
+DXY 98.8 (-0.61% 5d)  |  real 10Y 2.42%  |  gold/DXY corr -0.59  |  gold/SPX corr 0.32
+_GLD-proxy trust check — GC/GLD 30d return correlation: 0.93._
 
 _⭐ = within $10 of a round $50 level — Round levels are where institutional /GC futures gamma and ETF (GLD) gamma are most likely to align -- this book is GLD-proxy only until dxFeed is live, so treat round-number confluence as the higher-confidence levels._
 
