@@ -1,12 +1,12 @@
 {
   "data_source": "yfinance:GLD+IAU",
   "underlying": {
-    "gold": 4370.3,
-    "xauusd": 4370.3,
-    "gc": 4370.3,
+    "gold": 4388.0,
+    "xauusd": 4388.0,
+    "gc": 4388.0,
     "gld": 403.35,
     "basis_xau_gc": 0.0,
-    "gld_to_gold_ratio": 10.835,
+    "gld_to_gold_ratio": 10.8789,
     "etf_venues": [
       "GLD",
       "IAU"
@@ -14,57 +14,57 @@
   },
   "regime": {
     "state": "AMPLIFICATION",
-    "net_gex": -39688605.60129148,
-    "net_dex": 10879206926.649384,
-    "net_vex": 24630133.65930529,
-    "net_cex": -15973352.05995407,
+    "net_gex": -39849348.823088385,
+    "net_dex": 10923268912.337471,
+    "net_vex": 24729888.41202855,
+    "net_cex": -16038045.89422001,
     "flip": {
-      "xauusd": 4370.39,
-      "gc": 4370.39,
+      "xauusd": 4388.09,
+      "gc": 4388.09,
       "gld": 403.36
     }
   },
   "levels_xauusd": {
-    "call_wall": 4386.68,
-    "put_wall": 4360.26,
-    "hvl": 4360.26,
-    "gamma_flip": 4370.39,
+    "call_wall": 4404.45,
+    "put_wall": 4377.92,
+    "hvl": 4377.92,
+    "gamma_flip": 4388.09,
     "secondary": [
-      4492.39,
-      4377.34,
-      4279.83
+      4510.58,
+      4395.07,
+      4297.16
     ]
   },
   "round_confluence": {
     "call_wall": {
-      "is_confluence": false,
+      "is_confluence": true,
       "nearest_round": 4400.0
     },
     "put_wall": {
       "is_confluence": false,
-      "nearest_round": 4350.0
+      "nearest_round": 4400.0
     },
     "hvl": {
       "is_confluence": false,
-      "nearest_round": 4350.0
+      "nearest_round": 4400.0
     },
     "gamma_flip": {
       "is_confluence": false,
-      "nearest_round": 4350.0
+      "nearest_round": 4400.0
     },
     "step": 50.0,
     "tolerance": 10.0,
     "note": "Round levels are where institutional /GC futures gamma and ETF (GLD) gamma are most likely to align -- this book is GLD-proxy only until dxFeed is live, so treat round-number confluence as the higher-confidence levels."
   },
   "levels_gc": {
-    "call_wall": 4386.683674923032,
-    "put_wall": 4360.2578696524115,
-    "hvl": 4360.2578696524115,
-    "gamma_flip": 4370.392618318012,
+    "call_wall": 4404.450226713601,
+    "put_wall": 4377.9173940225555,
+    "hvl": 4377.9173940225555,
+    "gamma_flip": 4388.093189535933,
     "secondary": [
-      4492.386896005515,
-      4377.3424925661875,
-      4279.827437038723
+      4510.581557477784,
+      4395.071211539889,
+      4297.161209302614
     ]
   },
   "levels_gld": {
@@ -74,76 +74,76 @@
   },
   "ladder": [
     {
-      "strike_xau": 4650.94,
-      "strike_gold": 4650.94,
-      "call_gex": 1636961.37,
+      "strike_xau": 4669.78,
+      "strike_gold": 4669.78,
+      "call_gex": 1643591.24,
       "put_gex": 0.0
     },
     {
-      "strike_xau": 4492.39,
-      "strike_gold": 4492.39,
-      "call_gex": 11096267.1,
+      "strike_xau": 4510.58,
+      "strike_gold": 4510.58,
+      "call_gex": 11141208.21,
       "put_gex": 0.0
     },
     {
-      "strike_xau": 4464.02,
-      "strike_gold": 4464.02,
-      "call_gex": 418785.61,
+      "strike_xau": 4482.1,
+      "strike_gold": 4482.1,
+      "call_gex": 420481.74,
       "put_gex": 0.0
     },
     {
-      "strike_xau": 4439.54,
-      "strike_gold": 4439.54,
-      "call_gex": 729484.55,
+      "strike_xau": 4457.52,
+      "strike_gold": 4457.52,
+      "call_gex": 732439.04,
       "put_gex": 0.0
     },
     {
-      "strike_xau": 4420.68,
-      "strike_gold": 4420.68,
-      "call_gex": 783140.9,
+      "strike_xau": 4438.59,
+      "strike_gold": 4438.59,
+      "call_gex": 786312.71,
       "put_gex": 0.0
     },
     {
-      "strike_xau": 4399.01,
-      "strike_gold": 4399.01,
-      "call_gex": 424271.17,
+      "strike_xau": 4416.83,
+      "strike_gold": 4416.83,
+      "call_gex": 425989.51,
       "put_gex": 0.0
     },
     {
-      "strike_xau": 4386.68,
-      "strike_gold": 4386.68,
-      "call_gex": 15266767.67,
+      "strike_xau": 4404.45,
+      "strike_gold": 4404.45,
+      "call_gex": 15328599.76,
       "put_gex": 0.0
     },
     {
-      "strike_xau": 4377.34,
-      "strike_gold": 4377.34,
-      "call_gex": 4729875.24,
+      "strike_xau": 4395.07,
+      "strike_gold": 4395.07,
+      "call_gex": 4749031.75,
       "put_gex": 0.0
     },
     {
-      "strike_xau": 4360.26,
-      "strike_gold": 4360.26,
+      "strike_xau": 4377.92,
+      "strike_gold": 4377.92,
       "call_gex": 0.0,
-      "put_gex": -69352506.86
+      "put_gex": -69633392.15
     },
     {
-      "strike_xau": 4355.67,
-      "strike_gold": 4355.67,
+      "strike_xau": 4373.31,
+      "strike_gold": 4373.31,
       "call_gex": 0.0,
-      "put_gex": -2369198.88
+      "put_gex": -2378794.39
     },
     {
-      "strike_xau": 4344.84,
-      "strike_gold": 4344.84,
+      "strike_xau": 4362.43,
+      "strike_gold": 4362.43,
       "call_gex": 0.0,
-      "put_gex": -313951.06
+      "put_gex": -315222.6
     },
     {
-      "strike_xau": 4279.83,
-      "strike_gold": 4279.83,
+      "strike_xau": 4297.16,
+      "strike_gold": 4297.16,
       "call_gex": 0.0,
-      "put_gex": -2539234.49
+      "put_gex": -2549518.67
     }
   ],
   "sign_convention": "dealer_long_calls_short_puts",
@@ -151,14 +151,14 @@
     "window_days": 30,
     "dxy": {
       "symbol": "DX-Y.NYB",
-      "level": 99.18,
-      "chg_1d_pct": 0.41,
-      "chg_5d_pct": -0.39
+      "level": 99.1,
+      "chg_1d_pct": 0.34,
+      "chg_5d_pct": -0.46
     },
     "yield_10y_nominal": {
       "symbol": "^TNX",
-      "pct": 4.893,
-      "chg_5d_bp": 9.7
+      "pct": 4.91,
+      "chg_5d_bp": 11.4
     },
     "correlations": {
       "gold_vs_dxy": -0.62,
@@ -181,7 +181,7 @@
       "rate_basis": "real_10y"
     }
   },
-  "asof_utc": "2026-09-10T12:51:02.290575+00:00",
+  "asof_utc": "2026-09-10T13:22:23.484911+00:00",
   "oi_date": "2026-09-09",
   "notes": "OI is prior-session settlement (T+1). Intraday flow not reflected."
 }
