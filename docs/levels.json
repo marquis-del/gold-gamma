@@ -14,25 +14,25 @@
   },
   "regime": {
     "state": "SUPPRESSION",
-    "net_gex": 7965879955.558818,
-    "net_dex": 57517378769.69366,
-    "net_vex": 684338367.8213059,
-    "net_cex": -4191647744.208278,
+    "net_gex": 118886048.44334817,
+    "net_dex": 3089669943.4347396,
+    "net_vex": 101042899.36987579,
+    "net_cex": -217650007.9804827,
     "flip": {
-      "xauusd": 4411.43,
-      "gc": 4411.43,
-      "gld": 400.76
+      "xauusd": 4401.47,
+      "gc": 4401.47,
+      "gld": 399.86
     }
   },
   "levels_xauusd": {
     "call_wall": 4403.02,
-    "put_wall": 4403.02,
+    "put_wall": 4296.14,
     "hvl": 4403.02,
-    "gamma_flip": 4411.43,
+    "gamma_flip": 4401.47,
     "secondary": [
-      4414.03,
-      4425.04,
-      4513.1
+      4358.99,
+      4725.76,
+      4414.03
     ]
   },
   "round_confluence": {
@@ -42,14 +42,14 @@
     },
     "put_wall": {
       "is_confluence": true,
-      "nearest_round": 4400.0
+      "nearest_round": 4300.0
     },
     "hvl": {
       "is_confluence": true,
       "nearest_round": 4400.0
     },
     "gamma_flip": {
-      "is_confluence": false,
+      "is_confluence": true,
       "nearest_round": 4400.0
     },
     "step": 50.0,
@@ -58,92 +58,92 @@
   },
   "levels_gc": {
     "call_wall": 4403.020918351085,
-    "put_wall": 4403.020918351085,
+    "put_wall": 4296.144688868145,
     "hvl": 4403.020918351085,
-    "gamma_flip": 4411.430128037065,
+    "gamma_flip": 4401.471580643773,
     "secondary": [
-      4414.028470646963,
-      4425.036022942841,
-      4513.096441309862
+      4358.990709167574,
+      4725.759157754959,
+      4414.028470646963
     ]
   },
   "levels_gld": {
     "call_wall": 400.0,
-    "put_wall": 400.0,
+    "put_wall": 390.29,
     "hvl": 400.0
   },
   "ladder": [
     {
-      "strike_xau": 4568.13,
-      "strike_gold": 4568.13,
-      "call_gex": 551695269.86,
-      "put_gex": -31995665.84
+      "strike_xau": 4725.76,
+      "strike_gold": 4725.76,
+      "call_gex": 54571587.8,
+      "put_gex": 0.0
+    },
+    {
+      "strike_xau": 4672.06,
+      "strike_gold": 4672.06,
+      "call_gex": 41839304.84,
+      "put_gex": -165542.59
+    },
+    {
+      "strike_xau": 4645.19,
+      "strike_gold": 4645.19,
+      "call_gex": 37872441.37,
+      "put_gex": 0.0
     },
     {
       "strike_xau": 4513.1,
       "strike_gold": 4513.1,
-      "call_gex": 493148316.28,
-      "put_gex": -175205914.19
+      "call_gex": 35698998.2,
+      "put_gex": -910812.06
     },
     {
       "strike_xau": 4458.06,
       "strike_gold": 4458.06,
-      "call_gex": 339702225.19,
-      "put_gex": -5516796.21
+      "call_gex": 37307190.04,
+      "put_gex": -7528070.57
     },
     {
-      "strike_xau": 4447.05,
-      "strike_gold": 4447.05,
-      "call_gex": 96402937.47,
-      "put_gex": -209304341.03
-    },
-    {
-      "strike_xau": 4436.04,
-      "strike_gold": 4436.04,
-      "call_gex": 192166632.92,
-      "put_gex": -50759442.79
-    },
-    {
-      "strike_xau": 4425.04,
-      "strike_gold": 4425.04,
-      "call_gex": 752909940.87,
-      "put_gex": -17618930.42
+      "strike_xau": 4457.25,
+      "strike_gold": 4457.25,
+      "call_gex": 4620529.96,
+      "put_gex": -42960632.86
     },
     {
       "strike_xau": 4414.03,
       "strike_gold": 4414.03,
-      "call_gex": 502277712.17,
-      "put_gex": -1560597533.01
+      "call_gex": 39675360.21,
+      "put_gex": -10638924.95
     },
     {
       "strike_xau": 4403.02,
       "strike_gold": 4403.02,
-      "call_gex": 9991762677.17,
-      "put_gex": -4604176685.66
-    },
-    {
-      "strike_xau": 4392.01,
-      "strike_gold": 4392.01,
-      "call_gex": 167200737.98,
-      "put_gex": -95166876.12
+      "call_gex": 55799438.51,
+      "put_gex": -86991922.53
     },
     {
       "strike_xau": 4381.01,
       "strike_gold": 4381.01,
-      "call_gex": 66551336.41,
-      "put_gex": -167192294.81
+      "call_gex": 12783405.0,
+      "put_gex": -25337368.87
     },
     {
-      "strike_xau": 4347.98,
-      "strike_gold": 4347.98,
-      "call_gex": 301941634.21,
-      "put_gex": -136990151.56
+      "strike_xau": 4370.0,
+      "strike_gold": 4370.0,
+      "call_gex": 10865945.01,
+      "put_gex": -33442360.46
     },
     {
-      "strike_xau": 4292.95,
-      "strike_gold": 4292.95,
-      "call_gex": 378674046.53,
-      "put_gex": -166264065.64
+      "strike_xau": 4358.99,
+      "strike_gold": 4358.99,
+      "call_gex": 11910372.0,
+      "put_gex": -70123195.42
+    },
+    {
+      "strike_xau": 4296.14,
+      "strike_gold": 4296.14,
+      "call_gex": 1102660.6,
+      "put_gex": -97563448.49
     }
   ],
   "sign_convention": "dealer_long_calls_short_puts",
@@ -181,7 +181,7 @@
       "rate_basis": "real_10y"
     }
   },
-  "asof_utc": "2026-09-18T23:48:22.692740+00:00",
+  "asof_utc": "2026-09-19T01:18:25.124405+00:00",
   "oi_date": "2026-09-17",
   "notes": "OI is prior-session settlement (T+1). Intraday flow not reflected."
 }
