@@ -1,17 +1,17 @@
 # Gold Gamma Brief — Sunday Oct 04, 2026
 
-**Spot (XAUUSD):** 4,172.5  |  **Source:** yfinance:GLD+IAU
-**Regime:** AMPLIFICATION  |  **Net GEX:** -$0.05B  |  **Net DEX:** +$5.55B  |  **Net VEX:** +$0.11B  |  **Net CEX/day:** -$0.34B
-**Gamma flip:** 4,176.7  |  **Call wall:** 4,282.2  |  **Put wall:** 4,171.0  |  **HVL:** 4,171.0
+**Spot (XAUUSD):** 4,178.0  |  **Source:** yfinance:GLD+IAU
+**Regime:** SUPPRESSION  |  **Net GEX:** +$0.05B  |  **Net DEX:** +$5.91B  |  **Net VEX:** +$0.12B  |  **Net CEX/day:** -$0.55B
+**Gamma flip:** 4,173.1  |  **Call wall:** 4,287.9  |  **Put wall:** 4,234.3  |  **HVL:** 4,287.9
 
 ## Game plan
-- Negative gamma / below flip 4,176.7: trending, volatile tape — respect momentum.
-- Breakdowns extend toward the put wall 4,171.0; reclaiming 4,176.7 restores suppression.
-- Rallies can run to the call wall 4,282.2 before dealers cap them.
+- Positive gamma / above flip 4,173.1: contained, mean-reverting tape.
+- Fade rallies into the call wall 4,287.9; buy dips toward the HVL magnet 4,287.9.
+- Losing 4,173.1 flips to AMPLIFICATION — momentum turns on, next support the put wall 4,234.3.
 
 ## Macro backdrop
 **Regime:** MIXED — Dollar and yield signals aren't aligned over the last 5 days.
-DXY 101.9 (+0.71% 5d)  |  real 10Y 2.88%  |  gold/DXY corr -0.39  |  gold/SPX corr 0.48
+DXY 101.9 (+0.69% 5d)  |  real 10Y 2.88%  |  gold/DXY corr -0.39  |  gold/SPX corr 0.48
 _GLD-proxy trust check — GC/GLD 30d return correlation: 0.87._
 
 _OI is prior-session settlement (T+1). Sign convention: dealer_long_calls_short_puts. Positioning context, not financial advice._
