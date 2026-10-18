@@ -1,1 +1,1 @@
-callWall=4169.81,putWall=4158.72,hvl=4169.81,flip=4169.57,s1=4214.17,s2=4180.9,s3=4191.99,regime=SUPPRESSION
+callWall=4227.83,putWall=4129,hvl=4172.93,flip=4138.9,s1=4161.95,s2=4194.89,s3=4205.87,regime=SUPPRESSION

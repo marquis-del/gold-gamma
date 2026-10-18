@@ -1,19 +1,17 @@
-# Gold Gamma Brief — Thursday Oct 15, 2026
+# Gold Gamma Brief — Sunday Oct 18, 2026
 
-**Spot (XAUUSD):** 4,169.7  |  **Source:** yfinance:GLD+IAU
-**Regime:** SUPPRESSION  |  **Net GEX:** +$0.06B  |  **Net DEX:** +$31.91B  |  **Net VEX:** -$0.01B  |  **Net CEX/day:** -$0.01B
-**Gamma flip:** 4,169.6  |  **Call wall:** 4,169.8  |  **Put wall:** 4,158.7 ⭐  |  **HVL:** 4,169.8
+**Spot (XAUUSD):** 4,195.0  |  **Source:** yfinance:GLD+IAU
+**Regime:** SUPPRESSION  |  **Net GEX:** +$0.76B  |  **Net DEX:** +$2.50B  |  **Net VEX:** +$0.04B  |  **Net CEX/day:** -$0.22B
+**Gamma flip:** 4,138.9  |  **Call wall:** 4,227.8  |  **Put wall:** 4,129.0  |  **HVL:** 4,172.9
 
 ## Game plan
-- Positive gamma / above flip 4,169.6: contained, mean-reverting tape.
-- Fade rallies into the call wall 4,169.8; buy dips toward the HVL magnet 4,169.8.
-- Losing 4,169.6 flips to AMPLIFICATION — momentum turns on, next support the put wall 4,158.7.
+- Positive gamma / above flip 4,138.9: contained, mean-reverting tape.
+- Fade rallies into the call wall 4,227.8; buy dips toward the HVL magnet 4,172.9.
+- Losing 4,138.9 flips to AMPLIFICATION — momentum turns on, next support the put wall 4,129.0.
 
 ## Macro backdrop
-**Regime:** MIXED — Dollar and yield signals aren't aligned over the last 5 days.
-DXY 102.1 (-0.03% 5d)  |  real 10Y 2.88%  |  gold/DXY corr -0.43  |  gold/SPX corr 0.49
-_GLD-proxy trust check — GC/GLD 30d return correlation: 0.86._
-
-_⭐ = within $10 of a round $50 level — Round levels are where institutional /GC futures gamma and ETF (GLD) gamma are most likely to align -- this book is GLD-proxy only until dxFeed is live, so treat round-number confluence as the higher-confidence levels._
+**Regime:** TAILWIND — Dollar weakening and yields falling over 5 days — both support gold.
+DXY 101.9 (-0.71% 5d)  |  real 10Y 2.78%  |  gold/DXY corr -0.33  |  gold/SPX corr 0.36
+_GLD-proxy trust check — GC/GLD 30d return correlation: 0.87._
 
 _OI is prior-session settlement (T+1). Sign convention: dealer_long_calls_short_puts. Positioning context, not financial advice._
