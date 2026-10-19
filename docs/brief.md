@@ -1,13 +1,13 @@
 # Gold Gamma Brief — Sunday Oct 18, 2026
 
-**Spot (XAUUSD):** 4,194.5  |  **Source:** yfinance:GLD+IAU
-**Regime:** SUPPRESSION  |  **Net GEX:** +$0.68B  |  **Net DEX:** +$2.72B  |  **Net VEX:** +$0.04B  |  **Net CEX/day:** -$0.39B
-**Gamma flip:** 4,129.2  |  **Call wall:** 4,227.3  |  **Put wall:** 4,128.5  |  **HVL:** 4,227.3
+**Spot (XAUUSD):** 4,188.1  |  **Source:** yfinance:GLD+IAU
+**Regime:** SUPPRESSION  |  **Net GEX:** +$0.68B  |  **Net DEX:** +$2.71B  |  **Net VEX:** +$0.04B  |  **Net CEX/day:** -$0.39B
+**Gamma flip:** 4,122.9  |  **Call wall:** 4,220.9  |  **Put wall:** 4,122.2  |  **HVL:** 4,220.9
 
 ## Game plan
-- Positive gamma / above flip 4,129.2: contained, mean-reverting tape.
-- Fade rallies into the call wall 4,227.3; buy dips toward the HVL magnet 4,227.3.
-- Losing 4,129.2 flips to AMPLIFICATION — momentum turns on, next support the put wall 4,128.5.
+- Positive gamma / above flip 4,122.9: contained, mean-reverting tape.
+- Fade rallies into the call wall 4,220.9; buy dips toward the HVL magnet 4,220.9.
+- Losing 4,122.9 flips to AMPLIFICATION — momentum turns on, next support the put wall 4,122.2.
 
 ## Macro backdrop
 **Regime:** TAILWIND — Dollar weakening and yields falling over 5 days — both support gold.
