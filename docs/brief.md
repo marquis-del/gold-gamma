@@ -1,13 +1,13 @@
 # Gold Gamma Brief — Tuesday Oct 20, 2026
 
-**Spot (XAUUSD):** 4,150.5  |  **Source:** yfinance:GLD+IAU
-**Regime:** AMPLIFICATION  |  **Net GEX:** -$0.26B  |  **Net DEX:** +$2.00B  |  **Net VEX:** +$0.08B  |  **Net CEX/day:** -$0.48B
-**Gamma flip:** 4,155.6 ⭐  |  **Call wall:** 4,164.8  |  **Put wall:** 4,142.8 ⭐  |  **HVL:** 4,164.8
+**Spot (XAUUSD):** 4,147.1  |  **Source:** yfinance:GLD+IAU
+**Regime:** AMPLIFICATION  |  **Net GEX:** -$0.59B  |  **Net DEX:** +$2.12B  |  **Net VEX:** +$0.08B  |  **Net CEX/day:** -$0.47B
+**Gamma flip:** 4,154.6 ⭐  |  **Call wall:** 4,169.3  |  **Put wall:** 4,147.3 ⭐  |  **HVL:** 4,147.3 ⭐
 
 ## Game plan
-- Negative gamma / below flip 4,155.6: trending, volatile tape — respect momentum.
-- Breakdowns extend toward the put wall 4,142.8; reclaiming 4,155.6 restores suppression.
-- Rallies can run to the call wall 4,164.8 before dealers cap them.
+- Negative gamma / below flip 4,154.6: trending, volatile tape — respect momentum.
+- Breakdowns extend toward the put wall 4,147.3; reclaiming 4,154.6 restores suppression.
+- Rallies can run to the call wall 4,169.3 before dealers cap them.
 
 ## Macro backdrop
 **Regime:** TAILWIND — Dollar weakening and yields falling over 5 days — both support gold.
