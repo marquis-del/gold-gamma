@@ -1,12 +1,12 @@
 # Gold Gamma Brief — Saturday Oct 31, 2026
 
 **Spot (XAUUSD):** 3,898.9  |  **Source:** yfinance:GLD+IAU
-**Regime:** AMPLIFICATION  |  **Net GEX:** -$0.22B  |  **Net DEX:** +$2.10B  |  **Net VEX:** +$0.00B  |  **Net CEX/day:** +$0.00B
-**Gamma flip:** 3,986.6  |  **Call wall:** 4,010.9  |  **Put wall:** 3,945.2 ⭐  |  **HVL:** 3,945.2 ⭐
+**Regime:** AMPLIFICATION  |  **Net GEX:** -$0.18B  |  **Net DEX:** +$2.12B  |  **Net VEX:** +$0.01B  |  **Net CEX/day:** -$0.05B
+**Gamma flip:** 3,969.9  |  **Call wall:** 4,010.9  |  **Put wall:** 3,999.9 ⭐  |  **HVL:** 3,999.9 ⭐
 
 ## Game plan
-- Negative gamma / below flip 3,986.6: trending, volatile tape — respect momentum.
-- Breakdowns extend toward the put wall 3,945.2; reclaiming 3,986.6 restores suppression.
+- Negative gamma / below flip 3,969.9: trending, volatile tape — respect momentum.
+- Breakdowns extend toward the put wall 3,999.9; reclaiming 3,969.9 restores suppression.
 - Rallies can run to the call wall 4,010.9 before dealers cap them.
 
 ## Macro backdrop
