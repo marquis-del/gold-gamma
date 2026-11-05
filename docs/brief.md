@@ -11,7 +11,7 @@
 
 ## Macro backdrop
 **Regime:** MIXED — Dollar and yield signals aren't aligned over the last 5 days.
-DXY 101.3 (-0.88% 5d)  |  real 10Y 2.65%  |  gold/DXY corr -0.36  |  gold/SPX corr 0.68
+DXY 101.3 (-0.91% 5d)  |  real 10Y 2.65%  |  gold/DXY corr -0.37  |  gold/SPX corr 0.68
 _GLD-proxy trust check — GC/GLD 30d return correlation: 0.95._
 
 _OI is prior-session settlement (T+1). Sign convention: dealer_long_calls_short_puts. Positioning context, not financial advice._
