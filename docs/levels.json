@@ -14,21 +14,21 @@
   },
   "regime": {
     "state": "AMPLIFICATION",
-    "net_gex": -368761004.7735858,
-    "net_dex": 6965173259.018972,
-    "net_vex": 21180156.710041393,
-    "net_cex": -514741664.4674183,
+    "net_gex": -368521188.86155933,
+    "net_dex": 6965513261.699474,
+    "net_vex": 21193301.191063512,
+    "net_cex": -514998708.0005661,
     "flip": {
-      "xauusd": 3796.72,
-      "gc": 3796.72,
-      "gld": 347.4
+      "xauusd": 3796.77,
+      "gc": 3796.77,
+      "gld": 347.41
     }
   },
   "levels_xauusd": {
     "call_wall": 3879.74,
     "put_wall": 3770.45,
     "hvl": 3770.45,
-    "gamma_flip": 3796.72,
+    "gamma_flip": 3796.77,
     "secondary": [
       3715.8,
       3792.31,
@@ -60,7 +60,7 @@
     "call_wall": 3879.7369485384484,
     "put_wall": 3770.4485837908865,
     "hvl": 3770.4485837908865,
-    "gamma_flip": 3796.7215945756175,
+    "gamma_flip": 3796.773308777911,
     "secondary": [
       3715.8044014171055,
       3792.3062567403986,
@@ -82,8 +82,8 @@
     {
       "strike_xau": 3814.16,
       "strike_gold": 3814.16,
-      "call_gex": 604251.32,
-      "put_gex": -13589746.88
+      "call_gex": 604233.08,
+      "put_gex": -13305024.24
     },
     {
       "strike_xau": 3810.39,
@@ -94,14 +94,14 @@
     {
       "strike_xau": 3803.24,
       "strike_gold": 3803.24,
-      "call_gex": 3159902.16,
-      "put_gex": -14324902.36
+      "call_gex": 3159798.8,
+      "put_gex": -14246022.35
     },
     {
       "strike_xau": 3792.31,
       "strike_gold": 3792.31,
       "call_gex": 3784138.54,
-      "put_gex": -56284316.85
+      "put_gex": -56278280.48
     },
     {
       "strike_xau": 3783.75,
@@ -113,19 +113,19 @@
       "strike_xau": 3781.38,
       "strike_gold": 3781.38,
       "call_gex": 2703079.36,
-      "put_gex": -13572501.83
+      "put_gex": -13583833.18
     },
     {
       "strike_xau": 3770.45,
       "strike_gold": 3770.45,
       "call_gex": 5206103.61,
-      "put_gex": -154936754.27
+      "put_gex": -154999928.77
     },
     {
       "strike_xau": 3759.52,
       "strike_gold": 3759.52,
       "call_gex": 0.0,
-      "put_gex": -52791583.57
+      "put_gex": -52854800.73
     },
     {
       "strike_xau": 3730.46,
@@ -137,7 +137,7 @@
       "strike_xau": 3715.8,
       "strike_gold": 3715.8,
       "call_gex": 735375.25,
-      "put_gex": -103586304.1
+      "put_gex": -103588807.29
     },
     {
       "strike_xau": 3551.87,
@@ -181,7 +181,7 @@
       "rate_basis": "real_10y"
     }
   },
-  "asof_utc": "2026-11-18T15:18:32.704305+00:00",
+  "asof_utc": "2026-11-18T15:18:33.055436+00:00",
   "oi_date": "2026-11-17",
   "notes": "OI is prior-session settlement (T+1). Intraday flow not reflected."
 }

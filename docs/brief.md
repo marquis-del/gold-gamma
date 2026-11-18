@@ -2,11 +2,11 @@
 
 **Spot (XAUUSD):** 3,758.7  |  **Source:** yfinance:GLD+IAU
 **Regime:** AMPLIFICATION  |  **Net GEX:** -$0.37B  |  **Net DEX:** +$6.97B  |  **Net VEX:** +$0.02B  |  **Net CEX/day:** -$0.51B
-**Gamma flip:** 3,796.7 ⭐  |  **Call wall:** 3,879.7  |  **Put wall:** 3,770.4  |  **HVL:** 3,770.4
+**Gamma flip:** 3,796.8 ⭐  |  **Call wall:** 3,879.7  |  **Put wall:** 3,770.4  |  **HVL:** 3,770.4
 
 ## Game plan
-- Negative gamma / below flip 3,796.7: trending, volatile tape — respect momentum.
-- Breakdowns extend toward the put wall 3,770.4; reclaiming 3,796.7 restores suppression.
+- Negative gamma / below flip 3,796.8: trending, volatile tape — respect momentum.
+- Breakdowns extend toward the put wall 3,770.4; reclaiming 3,796.8 restores suppression.
 - Rallies can run to the call wall 3,879.7 before dealers cap them.
 
 ## Macro backdrop
