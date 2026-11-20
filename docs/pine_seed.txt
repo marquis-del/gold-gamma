@@ -1,1 +1,1 @@
-callWall=3711.34,putWall=3547.6,hvl=3547.6,flip=,s1=3602.18,s2=3765.92,s3=3493.03,regime=AMPLIFICATION
+callWall=3716.82,putWall=3607.5,hvl=3607.5,flip=,s1=3552.85,s2=3771.48,s3=3498.19,regime=AMPLIFICATION
