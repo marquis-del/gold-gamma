@@ -181,7 +181,7 @@
       "rate_basis": "real_10y"
     }
   },
-  "asof_utc": "2026-11-23T22:01:18.444985+00:00",
+  "asof_utc": "2026-11-23T22:01:23.876376+00:00",
   "oi_date": "2026-11-22",
   "notes": "OI is prior-session settlement (T+1). Intraday flow not reflected."
 }
